@@ -24,7 +24,7 @@ const scrollToSection = (id) => {
     <div id="contacts"><Contacts /></div>
   </main>
 </template>
-
+<!-- //hello -->
 <style scoped>
 html {
   scroll-behavior: smooth;
