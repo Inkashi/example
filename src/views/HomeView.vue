@@ -19,8 +19,8 @@ const scrollToSection = (id) => {
   <Header />
   <main>
     <div id="hero"><Hero /></div>
-    <div id="services"><Service /></div>
     <div id="premium"><Premium /></div>
+    <div id="services"><Service /></div>
     <div id="contacts"><Contacts /></div>
   </main>
 </template>

@@ -20,8 +20,8 @@ import { scrollToSection } from '@/utils/scroll'
 const isMenuOpen = ref(false)
 const links = ref([
   { text: 'Главная', url: '#hero' },
-  { text: 'Услуги', url: '#services' },
   { text: 'Преимущества', url: '#premium' },
+  { text: 'Услуги', url: '#services' },
   { text: 'Контакты', url: '#contacts' },
 ])
 

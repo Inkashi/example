@@ -2,10 +2,11 @@
   <div class="container">
     <img src="./icons/back-image.jpg" alt="background" />
     <div class="overlay"></div>
-    <div class="info-container">
-      <p class="title fade-in">{{ title }}</p>
-      <p class="text fade-in delay">{{ text }}</p>
+    <div ref="infoContainer" class="info-container">
+      <p ref="titleElement" class="title fade-in delay-2">{{ title }}</p>
+      <p ref="textElement" class="text fade-in delay-2">{{ text }}</p>
       <a
+        ref="navLinkElement"
         :href="'#services'"
         class="nav-link fade-in delay-2"
         @click.prevent="scrollToSection('#services')"
@@ -27,10 +28,39 @@ const text = ref(
     'решения для каждого клиента',
 )
 
-onMounted(() => {
-  document.querySelectorAll('.fade-in').forEach((el) => {
-    el.classList.add('visible')
+const infoContainer = ref(null)
+const titleElement = ref(null)
+const textElement = ref(null)
+const navLinkElement = ref(null)
+
+const setupIntersectionObserver = () => {
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    },
+    {
+      threshold: 0.01, // Срабатывает даже при 1% видимости
+    },
+  )
+
+  ;[titleElement.value, textElement.value, navLinkElement.value].forEach((el) => {
+    if (el) {
+      observer.observe(el)
+
+      if (el.getBoundingClientRect().top < window.innerHeight) {
+        el.classList.add('visible')
+      }
+    }
   })
+}
+
+onMounted(() => {
+  setupIntersectionObserver()
 })
 </script>
 
