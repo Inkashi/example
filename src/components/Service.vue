@@ -42,7 +42,7 @@
             <tr v-for="(service, idx) in tables[currentIndex].data" :key="idx">
               <td>
                 <div class="serviceName">{{ service.name }}</div>
-                <div>{{ service.price }} ₽/{{ service.unit }}</div>
+                <div>{{ service.price }} ₽ {{ service.unit }}</div>
               </td>
             </tr>
           </tbody>
