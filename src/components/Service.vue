@@ -54,9 +54,31 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import json from './json/data.json'
+import lightbulb from '@/components/icons/lightbulb.png'
+import socket from '@/components/icons/socket.png'
+import bell from '@/components/icons/bell.png'
+import tools from '@/components/icons/tools.png'
+import drill from '@/components/icons/drill.png'
+import wires from '@/components/icons/wires.png'
+import meter from '@/components/icons/meter.png'
+import cable from '@/components/icons/cable.png'
+import other from '@/components/icons/other.png'
 
-const items = ref(json.items)
+const items = ref([
+  { id: 1, img_path: lightbulb, name: 'Освещение' },
+  { id: 2, img_path: socket, name: 'Розетки/выключатели' },
+  { id: 3, img_path: bell, name: 'Дверные звонки' },
+  { id: 4, img_path: tools, name: 'Демонтаж' },
+  { id: 5, img_path: drill, name: 'Штробление/сверление' },
+  {
+    id: 6,
+    img_path: wires,
+    name: 'Прокладка электрических проводов/кабелей',
+  },
+  { id: 7, img_path: meter, name: 'Соединительные коробки' },
+  { id: 8, img_path: cable, name: 'Монтаж кабель канала' },
+  { id: 9, img_path: other, name: 'Дополнительные услуги' },
+])
 const selectedService = ref(items.value[0].id)
 const currentIndex = ref(0)
 const container = ref(null)
@@ -69,7 +91,128 @@ const tableContent = ref(null)
 const priceTable = ref(null)
 const gridOther = ref(null)
 let hasLoaded = ref(false)
-const tables = ref(json.tables)
+const tables = ref([
+  {
+    title: 'Освещение',
+    data: [
+      { name: 'Монтаж и подключение точ.светильника', price: 300, unit: 'шт' },
+      {
+        name: 'Монтаж и подключение точ.светильника (гипсокартон, нат.потолок)',
+        price: 290,
+        unit: 'шт',
+      },
+      {
+        name: 'Монтаж и подключение светильника типа "Амстронг"',
+        price: 280,
+        unit: 'шт',
+      },
+      {
+        name: 'Монтаж и подключение накладного потолочного светильника',
+        price: 400,
+        unit: 'шт',
+      },
+      { name: 'Установка люстры', price: 600, unit: '' },
+    ],
+  },
+  {
+    title: 'Розетки/выключатели',
+    data: [
+      { name: 'Установка розетки/выключателя в готовое отверстие', price: 180, unit: 'шт' },
+      { name: 'Установка интернет розетки в готовое отверстие', price: 200, unit: 'шт' },
+      { name: 'Отверстие в гипсе и монтаж подрозетника', price: 170, unit: 'шт' },
+      { name: 'Отверстие в бетоне и монтаж подрозетника', price: 300, unit: 'шт' },
+      { name: 'Отверстие в кирпиче и монтаж подрозетника', price: 250, unit: 'шт' },
+      { name: 'Демонтаж выключателя/розетки', price: 130, unit: 'шт' },
+      { name: 'Демонтаж люстры, светильника', price: 300, unit: 'шт' },
+      { name: 'Демонтаж патрона', price: 50, unit: 'шт' },
+    ],
+  },
+  {
+    title: 'Дверные звонки',
+    data: [
+      { name: 'Демонтаж старого звонка', price: 100, unit: 'шт' },
+      { name: 'Установка дверного звонка или кнопки', price: 300, unit: 'шт' },
+      {
+        name: 'Установка дверного звонка на удалении от входа',
+        price: 'от 1500',
+        unit: 'шт',
+      },
+      { name: 'Монтаж и подключеие датчика движения', price: 'от 700', unit: 'шт' },
+    ],
+  },
+  {
+    title: 'Демонтаж',
+    data: [
+      { name: 'Демонтаж выключателя/розетки', price: 130, unit: 'шт' },
+      { name: 'Демонтаж люстры, светильника', price: 300, unit: 'шт' },
+      { name: 'Демонтаж патрона', price: 50, unit: 'шт' },
+      { name: 'Демонтаж кабель-канала', price: 35, unit: 'м.п.' },
+      { name: 'Демнтаж счетчика электроэнергии', price: 490, unit: 'шт' },
+      { name: 'Демонтаж электропроводки', price: 35, unit: 'шт' },
+      { name: 'Демонтаж старого звонка', price: 150, unit: 'шт' },
+      { name: 'Демонтаж автомата', price: 100, unit: 'шт' },
+    ],
+  },
+  {
+    title: 'Штробление/сверление',
+    data: [
+      { name: 'Штробление по штукатурке и гипсу до 25х25мм.', price: 80, unit: 'п.м.' },
+      { name: 'Отверстие в бетоне и монтаж подрозетника', price: 300, unit: 'шт' },
+      { name: 'Отверстие в кирпиче и монтаж подрозетника', price: 250, unit: 'шт' },
+      { name: 'Штробление по кирпичу и пенобетону до 25х25мм.', price: 120, unit: 'п.м.' },
+      { name: 'Штробление по бетону/монолиту до 25х25мм.', price: 250, unit: 'п.м.' },
+      {
+        name: 'Сквозное сверление стен в газобетоне/пенобетоне',
+        price: 'от 4',
+        unit: 'см',
+      },
+      { name: 'Сквозное сверление стен в кирпиче', price: 'от 6', unit: 'см' },
+      { name: 'Сквозное сверление стен в бетоне', price: 'от 11', unit: 'см' },
+      { name: 'Отверстие под дюбель D= 6-10 мм.', price: 30, unit: 'шт' },
+      { name: 'Отверстие под дюбель D= >10 мм.', price: '>50', unit: 'шт' },
+      { name: 'Отверстие в гипсе и монтаж подрозетника', price: 170, unit: 'шт' },
+    ],
+  },
+  {
+    title: 'Прокладка электрических проводов/кабелей',
+    data: [
+      { name: 'Монтаж кабеля до 3х жил, сечением до 2,5мм 2', price: 70, unit: 'м.п.' },
+      { name: 'Монтаж кабеля(1,5км.мм-4кв.мм) в гофре', price: 85, unit: 'м.п.' },
+      { name: 'Монтаж UTP кабеля (интернет)', price: 35, unit: 'м.п.' },
+      { name: 'Монтаж SAT кабеля (ТВ)', price: 35, unit: 'м.п.' },
+    ],
+  },
+  {
+    title: 'Соединительные коробки',
+    data: [
+      { name: 'Отверстие и монтаж коробки в гипсе и штукатурке', price: 170, unit: 'шт' },
+      { name: 'Отверстие и монтаж коробки в кирпиче и пенобетоне', price: 250, unit: 'шт' },
+      { name: 'Отверстие и монтаж коробки в бетоне и монолите', price: 300, unit: 'шт' },
+      { name: 'Установка накладной коробки', price: 250, unit: 'шт' },
+      { name: 'Установка накладной коробки', price: 200, unit: 'шт' },
+    ],
+  },
+  {
+    title: 'Монтаж кабель канала',
+    data: [
+      {
+        name: 'Монтаж кабель-канала по гипсокартону и другим мягким материалам',
+        price: 50,
+        unit: 'м.п.',
+      },
+      { name: 'Монтаж кабель-канала по газобетону/пенобетону', price: 60, unit: 'м.п.' },
+      { name: 'Монтаж кабель-канала по кирпичу', price: 90, unit: 'м.п.' },
+      { name: 'Монтаж кабель-канала по бетону', price: 110, unit: 'м.п.' },
+    ],
+  },
+  {
+    title: 'Дополнительные услуги',
+    data: [
+      { name: 'Монтаж лотка металлического', price: 350, unit: 'м.п.' },
+      { name: 'Монтаж лотка металлического', price: 'от 6000', unit: 'м.п.' },
+    ],
+  },
+])
 
 const selectService = (item) => {
   selectedService.value = item.id
