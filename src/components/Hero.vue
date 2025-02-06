@@ -44,7 +44,7 @@ const setupIntersectionObserver = () => {
       })
     },
     {
-      threshold: 0.01, // Срабатывает даже при 1% видимости
+      threshold: 0.01,
     },
   )
 
