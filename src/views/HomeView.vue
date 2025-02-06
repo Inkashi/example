@@ -2,7 +2,6 @@
 import Header from '../components/Header.vue'
 import Hero from '../components/Hero.vue'
 import Service from '../components/Service.vue'
-import PriceList from '@/components/PriceList.vue'
 import Premium from '@/components/Premium.vue'
 import Contacts from '@/components/Contacts.vue'
 
@@ -24,7 +23,6 @@ const scrollToSection = (id) => {
     <div id="contacts"><Contacts /></div>
   </main>
 </template>
-<!-- //hello -->
 <style scoped>
 html {
   scroll-behavior: smooth;

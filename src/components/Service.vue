@@ -15,16 +15,15 @@
         </a>
         <h4>{{ item.name }}</h4>
       </div>
-      <div
-        class="grid-item fade-in other"
-        ref="gridOther"
-        :style="{ transitionDelay: hasLoaded ? `0.1s` : `1.2s` }"
-      >
-        <a @click="selectService(other)"><h4>Дополнительные услуги</h4></a>
-      </div>
     </div>
   </div>
   <div ref="serviceDetails" class="service-details">
+    <p>
+      Внимание! Представленные в таблицах услуги являются основными позициями из нашего прайс-листа.
+      Точные цены могут варьироваться в зависимости от сложности работы, объёма услуг или
+      особенностей объекта. Для уточнения стоимости и получения подробной консультации рекомендуем
+      связаться с нами по телефону.
+    </p>
     <div class="nav-buttons">
       <button class="nav-button left" @click="prevTable" aria-label="Previous Table">
         <i class="fas fa-chevron-left"></i>
@@ -55,28 +54,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import lightbulbImage from './icons/lightbulb.png'
-import socketImage from './icons/socket.png'
-import bellImage from './icons/bell.png'
-import toolsImage from './icons/tools.png'
-import drillImage from './icons/drill.png'
-import meterImage from './icons/meter.png'
-import { useSwipe } from '@vueuse/core'
+import json from './json/data.json'
 
-const items = ref([
-  { id: 1, img_path: lightbulbImage, name: 'Освещение' },
-  { id: 2, img_path: socketImage, name: 'Розетки/выключатели' },
-  { id: 3, img_path: bellImage, name: 'Дверные звонки' },
-  { id: 4, img_path: toolsImage, name: 'Демонтаж' },
-  { id: 5, img_path: drillImage, name: 'Штробление/сверление' },
-  {
-    id: 6,
-    img_path: meterImage,
-    name: 'Монтаж, установка и подключение счётчика электроэнергии',
-  },
-])
-
-const other = { id: 7, img_path: lightbulbImage, name: 'Дополнительные услуги' }
+const items = ref(json.items)
 const selectedService = ref(items.value[0].id)
 const currentIndex = ref(0)
 const container = ref(null)
@@ -89,110 +69,15 @@ const tableContent = ref(null)
 const priceTable = ref(null)
 const gridOther = ref(null)
 let hasLoaded = ref(false)
+const tables = ref(json.tables)
 
 const selectService = (item) => {
-  selectedService.value = item
-  loadServiceTables(item.id)
-  scrollToServiceDetails()
+  selectedService.value = item.id
+  currentIndex.value = tables.value.findIndex((table) => table.title === item.name)
+
+  priceTable.value.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 
-const scrollToServiceDetails = () => {
-  if (serviceDetails.value) {
-    const offset = 72
-    const rect = serviceDetails.value.getBoundingClientRect()
-    window.scrollTo({
-      top: window.scrollY + rect.top - offset,
-      behavior: 'smooth',
-    })
-  }
-}
-
-const loadServiceTables = (id) => {
-  const Tables = [
-    {
-      title: 'Освещение',
-      data: [
-        { name: 'Монтаж и подкл. точечного светильника', price: 80, unit: 'шт' },
-        {
-          name: 'Монтаж и подкл.точечного светильника (гипсокартон, натяжной потолок)',
-          price: 1500,
-          unit: 'шт',
-        },
-        { name: 'Монтаж и подключение светильника типа "Амстронг"', price: 2500, unit: 'шт' },
-        { name: 'Монтаж и подключение накладного потолочного светильника', price: 80, unit: 'шт' },
-      ],
-    },
-    {
-      title: 'Розетки/выключатели',
-      data: [
-        { name: 'Штробление по штукатурке и гипсу до 25х25мм.', price: 80, unit: 'п.м' },
-        { name: 'Штробление по кирпичу и пенобетону до 25х25мм.', price: 120, unit: 'п.м' },
-        { name: 'Штробление по бетону/монолиту до 25х25мм', price: 250, unit: 'п.м' },
-        { name: 'Отверстие в гипсе и монтаж подрозетника', price: 170, unit: 'шт' },
-        { name: 'Отверстие в бетоне и монтаж подрозетника', price: 300, unit: 'шт' },
-        { name: 'Отверстие в кирпиче и монтаж подрозетника', price: 250, unit: 'шт' },
-        { name: 'Отверстие под дюбель D= 6-10 мм. ', price: 30, unit: '' },
-        { name: 'Отверстие под дюбель D= >10 мм. ', price: 50, unit: '' },
-        { name: 'Установка розетки/выключателя в готовое отверстие', price: 180, unit: 'шт' },
-        { name: 'Установка интернет розетки в готовое отверстие', price: 200, unit: 'шт' },
-      ],
-    },
-    {
-      title: 'Дверные звонки',
-      data: [
-        { name: 'Демонтаж старого звонка', price: 100, unit: 'шт' },
-        { name: 'Установка дверного звонка или кнопки', price: 300, unit: 'шт' },
-        { name: 'Установка дверного звонка на удалении от входа', price: 'от 1500', unit: 'шт' },
-        { name: 'Монтаж и подключение датчика движения', price: 700, unit: 'шт' },
-      ],
-    },
-    {
-      title: 'Демонтаж',
-      data: [
-        { name: 'Демонтаж выключателя/розетки ', price: 130, unit: 'шт' },
-        { name: 'Демонтаж люстры, светильника', price: 300, unit: 'шт' },
-        { name: 'Демонтаж патрона', price: 50, unit: 'шт' },
-        { name: 'Демонтаж кабель-канала', price: 35, unit: 'п.м' },
-        { name: 'Демнтаж счетчика электроэнергии', price: 490, unit: 'шт' },
-        { name: 'Демонтаж электропроводки', price: 35, unit: 'п.м' },
-      ],
-    },
-    {
-      title: 'Штробление/сверление',
-      data: [
-        { name: 'Монтаж кабеля до 3х жил, сечением до 2,5мм 2', price: 70, unit: 'п.м' },
-        { name: 'Монтаж кабеля(1,5км.мм-4кв.мм) в гофре', price: 85, unit: 'п.м' },
-        { name: 'Монтаж UTP кабеля (интернет) ', price: 35, unit: 'п.м' },
-        { name: 'Монтаж SAT кабеля (ТВ) ', price: 35, unit: 'п.м' },
-      ],
-    },
-    {
-      title: 'Монтаж, установка и подключение счётчика электроэнергии',
-      data: [
-        { name: 'Отверстие и монтаж коробки в гипсе и штукатурке', price: 170, unit: 'шт' },
-        { name: 'Отверстие и монтаж коробки в кирпиче и пенобетоне', price: 250, unit: 'шт' },
-        { name: 'Отверстие и монтаж коробки в бетоне и монолите', price: 300, unit: 'шт' },
-        { name: 'Установка накладной коробки ', price: 250, unit: 'шт' },
-        { name: 'Соединение проводов в коробке', price: 200, unit: 'шт' },
-        { name: 'По гипсокартону и другим мягким материалам', price: 50, unit: 'п.м' },
-        { name: 'По газобетону/пенобетону', price: 60, unit: 'п.м' },
-        { name: 'По кирпичу ', price: 90, unit: 'п.м' },
-        { name: 'По бетону', price: 110, unit: 'п.м' },
-      ],
-    },
-    {
-      title: 'Дополнительные услуги',
-      data: [
-        { name: 'Монтаж лотка металлического ', price: 350, unit: 'п.м' },
-        { name: 'Монтаж и сборка электрощита ', price: 'от 6000', unit: '' },
-      ],
-    },
-  ]
-  tables.value = Tables
-  currentIndex.value = id ? id - 1 : 0
-}
-
-const tables = ref([])
 const nextTable = () => {
   currentIndex.value = (currentIndex.value + 1) % tables.value.length
 }
@@ -200,11 +85,6 @@ const nextTable = () => {
 const prevTable = () => {
   currentIndex.value = (currentIndex.value - 1 + tables.value.length) % tables.value.length
 }
-
-useSwipe(container, {
-  onSwipeLeft: nextTable,
-  onSwipeRight: prevTable,
-})
 
 onMounted(() => {
   const observer = new IntersectionObserver(
@@ -223,6 +103,7 @@ onMounted(() => {
       threshold: 0.2,
     },
   )
+
   if (titleElement.value) observer.observe(titleElement.value)
   if (gridContainer.value) observer.observe(gridContainer.value)
   if (tableTitleElement.value) observer.observe(tableTitleElement.value)
@@ -233,8 +114,6 @@ onMounted(() => {
   }
   if (gridOther.value) observer.observe(gridOther.value)
 })
-
-loadServiceTables(items.value[0].id)
 </script>
 
 <style scoped lang="scss">
@@ -254,6 +133,19 @@ h1 {
   font-weight: 600;
   margin-bottom: 40px;
 }
+
+p {
+  margin: 10px 0;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 15px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -309,7 +201,8 @@ h4 {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
   min-height: 80vh;
-  padding-top: 5%;
+  padding-top: 1%;
+  padding-bottom: 1%;
   color: #efebe2;
 }
 .nav-buttons {
@@ -319,7 +212,6 @@ h4 {
   width: 100%;
   box-sizing: border-box;
   position: relative;
-  margin-bottom: 20px;
 }
 .nav-button {
   background: none;
@@ -344,7 +236,6 @@ h4 {
   padding: 0 20px;
   opacity: 0;
   box-sizing: border-box;
-  margin-top: 40px;
   transition:
     opacity 0.8s ease-out,
     transform 0.8s ease-out;
@@ -382,9 +273,6 @@ td .serviceName {
   h1 {
     font-size: 36px;
   }
-  .grid-container {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
   table {
     max-width: 100%;
   }
@@ -394,7 +282,10 @@ td .serviceName {
     font-size: 30px;
   }
   .grid-container {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(2, minmax(150px, 1fr));
+  }
+  .other {
+    grid-column: span 2;
   }
   .tableTitle {
     font-size: 22px;

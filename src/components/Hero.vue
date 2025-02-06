@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img src="./icons/back-image.jpg" alt="background" />
+    <img src="./icons/back-image.png" alt="background" />
     <div class="overlay"></div>
     <div ref="infoContainer" class="info-container">
       <p ref="titleElement" class="title fade-in delay-2">{{ title }}</p>

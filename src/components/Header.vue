@@ -81,7 +81,7 @@ onMounted(() => {
 }
 
 .nav-link:hover {
-  color: #00a8ff;
+  color: #a9c4ce;
 }
 
 .burger-menu {
