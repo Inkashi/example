@@ -132,7 +132,7 @@ img {
     width: 70px;
   }
   .text {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 @media (max-width: 768px) {
@@ -147,7 +147,7 @@ img {
     width: 60px;
   }
   .text {
-    font-size: 14px;
+    font-size: 18px;
   }
 }
 @media (max-width: 480px) {
@@ -163,7 +163,7 @@ img {
     width: 50px;
   }
   .text {
-    font-size: 16px;
+    font-size: 18px;
     text-align: left;
   }
   .advantage {

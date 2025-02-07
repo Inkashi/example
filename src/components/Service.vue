@@ -81,7 +81,6 @@ const items = ref([
 ])
 const selectedService = ref(items.value[0].id)
 const currentIndex = ref(0)
-const container = ref(null)
 const serviceDetails = ref(null)
 const titleElement = ref(null)
 const gridContainer = ref(null)
@@ -421,6 +420,9 @@ td .serviceName {
   }
 }
 @media (max-width: 768px) {
+  p {
+    width: 90%;
+  }
   h1 {
     font-size: 30px;
   }

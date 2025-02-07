@@ -10,6 +10,7 @@
         </li>
       </ul>
     </nav>
+    <h1>VectorHM</h1>
   </header>
 </template>
 
@@ -54,10 +55,14 @@ onMounted(() => {
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
   z-index: 1000;
-  padding: 15px 1%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+h1 {
+  padding-right: 5%;
+  color: white;
 }
 
 .nav-list {
@@ -75,7 +80,7 @@ onMounted(() => {
 .nav-link {
   color: white;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 20px;
   padding: 10px;
   transition: color 0.3s ease;
 }
@@ -96,6 +101,15 @@ onMounted(() => {
 @media (max-width: 768px) {
   .burger-menu {
     display: block;
+    margin-left: 2vw;
+    margin-top: 5%;
+    margin-right: auto;
+    font-size: 40px !important;
+  }
+
+  .header {
+    justify-content: space-between;
+    align-items: start;
   }
 
   .nav-list {

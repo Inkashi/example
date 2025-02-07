@@ -109,7 +109,6 @@ body {
   }
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
   .footer-container {
     flex-direction: column;
@@ -118,14 +117,15 @@ body {
   .contact-info,
   .social-links {
     text-align: center;
+    font-size: 18px;
     margin: 10px 0;
   }
   .icons {
     justify-content: center;
   }
   .icon img {
-    height: 30px;
-    width: 30px;
+    height: 60px;
+    width: 60px;
   }
 }
 </style>
