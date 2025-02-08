@@ -9,7 +9,7 @@
       <div class="social-links">
         <h2>Мы в соцсетях</h2>
         <div class="icons">
-          <a href="https://t.me/VectorHM" class="icon" title="Telegram">
+          <a href="https://t.me/VectorHM" class="icon tg" title="Telegram">
             <img src="./icons/telegram.png" alt="Telegram" />
           </a>
           <a href="https://wa.me/+79800376065" class="icon" title="WhatsApp">
@@ -97,18 +97,9 @@ body {
   transform: scale(1.2);
 }
 
-/* Копирайт */
-.copyright {
-  flex: 1;
-  margin-top: 20px;
-  text-align: center;
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  .copyright {
-    margin-top: 0;
-    text-align: right;
-  }
+.tg img {
+  width: 44px;
+  height: 44px;
 }
 
 @media (max-width: 768px) {
@@ -128,6 +119,11 @@ body {
   .icon img {
     height: 60px;
     width: 60px;
+  }
+
+  .tg img {
+    width: 64px;
+    height: 64px;
   }
 }
 </style>
