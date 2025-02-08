@@ -434,9 +434,13 @@ td .serviceName {
   }
   .tableTitle {
     font-size: 22px;
+    width: 70%;
   }
   .nav-button {
-    font-size: 20px;
+    font-size: 30px;
+  }
+  .fas {
+    font-weight: bolder;
   }
   td {
     font-size: 16px;
@@ -453,7 +457,7 @@ td .serviceName {
     font-size: 28px;
   }
   .nav-button {
-    font-size: 18px;
+    font-size: 24px;
   }
   td {
     font-size: 18px;

@@ -3,16 +3,16 @@
     <div class="footer-container">
       <div class="contact-info">
         <h2>Контакты</h2>
-        <p><strong>Телефон:</strong> <a href="tel:+79800376065">+7(900)123-45-67</a></p>
-        <p><strong>Email:</strong> <a href="mailto:example@example.com">example@example.com</a></p>
+        <p><strong>Телефон:</strong> <a href="tel:+79800376065">+7(980)037-60-65</a></p>
+        <p><strong>Email:</strong> <a href="mailto:vectorhm86@mail.ru">vectorhm86@mail.ru</a></p>
       </div>
       <div class="social-links">
         <h2>Мы в соцсетях</h2>
         <div class="icons">
-          <a href="#" class="icon" title="Telegram">
+          <a href="https://t.me/VectorHM" class="icon" title="Telegram">
             <img src="./icons/telegram.png" alt="Telegram" />
           </a>
-          <a href="#" class="icon" title="WhatsApp">
+          <a href="https://wa.me/+79800376065" class="icon" title="WhatsApp">
             <img src="./icons/wa.png" alt="WhatsApp" />
           </a>
         </div>
@@ -52,11 +52,12 @@ body {
   text-align: left;
 }
 .contact-info h2 {
-  font-size: 22px;
+  font-size: 24px;
   margin-bottom: 10px;
 }
 .contact-info p {
   margin: 5px 0;
+  font-size: 20px;
 }
 .contact-info a {
   color: #ff8c42;
@@ -69,7 +70,7 @@ body {
 .social-links {
   flex: 1;
   margin-left: 20px;
-  text-align: left;
+  text-align: right;
 }
 .social-links h2 {
   font-size: 22px;
@@ -79,9 +80,10 @@ body {
   display: flex;
   gap: 15px;
   margin-top: 10px;
+  justify-content: right;
 }
 .icon {
-  font-size: 28px;
+  font-size: 30px;
   text-decoration: none;
   display: flex;
   align-items: center;

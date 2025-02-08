@@ -191,7 +191,7 @@ a:hover {
     font-size: 16px;
   }
   a {
-    font-size: 14px;
+    font-size: 18px;
     padding: 10px 25px;
   }
 }
@@ -205,7 +205,7 @@ a:hover {
     font-size: 20px;
   }
   a {
-    font-size: 20px;
+    font-size: 24px;
     padding: 8px 20px;
   }
 }
